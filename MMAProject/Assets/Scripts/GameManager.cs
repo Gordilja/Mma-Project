@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] PlayerControls posReset;
     [SerializeField] PlayerCollisions playerCol;
 
+    [SerializeField] GameObject debugMenu;
     [SerializeField] GameObject bgPicture;
     [SerializeField] GameObject startPanel;
     [SerializeField] GameObject pausePanel;
@@ -85,6 +86,7 @@ public class GameManager : MonoBehaviour
 
     public void playGame() 
     {
+        debugMenu.SetActive(true);
         audioManager.bdPlay();
         audioManager.bdMusicMenuMute();
         scorePanel.SetActive(true);
@@ -100,6 +102,7 @@ public class GameManager : MonoBehaviour
     public void pauseGame() 
     {
         Time.timeScale = 0;
+        debugMenu.SetActive(false);
         scorePanel.SetActive(false);
         bgPicture.SetActive(true);
         audioManager.bdMute();
@@ -111,6 +114,7 @@ public class GameManager : MonoBehaviour
     public void resumeGame() 
     {
         Time.timeScale = 1;
+        debugMenu.SetActive(true);
         scorePanel.SetActive(true);
         bgPicture.SetActive(false);
         audioManager.bdUnmute();
@@ -122,6 +126,7 @@ public class GameManager : MonoBehaviour
     public void gameOver() 
     {
         bgMove.movingBG = false;
+        debugMenu.SetActive(false);
         scorePanel.SetActive(false);
         gameOverPanel.SetActive(true);
         playerScript.controls = false;
@@ -130,6 +135,7 @@ public class GameManager : MonoBehaviour
     public void gameCleared() 
     {
         bgMove.movingBG = false;
+        debugMenu.SetActive(false);
         gameClearPanel.SetActive(true);
         playerScript.controls = false;
     }
@@ -202,22 +208,11 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
-    /*
-    IEnumerator restartGame()
-    {
-        levelHolder.transform.GetChild(i).gameObject.SetActive(false);
-        levelClearPanel.SetActive(false);
-        //SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        yield return new WaitForSeconds(0.2f);
-        i = 0;
-        levelHolder.transform.GetChild(i).gameObject.SetActive(true);
-        startPanel.SetActive(true);
-        Time.timeScale = 0;
-    }
-    */
+  
     public void restartG()
     {
         posReset.ResetPosition();
+        debugMenu.SetActive(true);
         bgMove.movingBG = true;
         scorePanel.SetActive(true);
         gameOverPanel.SetActive(false);
