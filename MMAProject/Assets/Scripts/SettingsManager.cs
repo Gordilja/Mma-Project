@@ -136,6 +136,6 @@ public class SettingsManager : MonoBehaviour
 
         camXRotateSlide.value = camX;
         camYRotateSlide.value = camY;
-        moveCam.z = moveZ;
+        camZPos.value = moveZ;
     }
 }

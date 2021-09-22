@@ -87,7 +87,6 @@ public class GameManager : MonoBehaviour
 
     public void playGame() 
     {
-        debugMenu.SetActive(true);
         audioManager.bdPlay();
         audioManager.bdMusicMenuMute();
         scorePanel.SetActive(true);
@@ -98,24 +97,26 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         startPanel.SetActive(false);
         pauseBtn.SetActive(true);
+        debMenuBtn.SetActive(true);
     }
 
     public void pauseGame() 
     {
         Time.timeScale = 0;
-        debugMenu.SetActive(false);
         scorePanel.SetActive(false);
         bgPicture.SetActive(true);
         audioManager.bdMute();
         audioManager.bdMusicMenuUnmute();
         pausePanel.SetActive(true);
         pauseBtn.SetActive(false);
+        debMenuBtn.SetActive(false);
+        debugMenu.SetActive(false);
     }
 
     public void resumeGame() 
     {
         Time.timeScale = 1;
-        debugMenu.SetActive(true);
+        debMenuBtn.SetActive(true);
         scorePanel.SetActive(true);
         bgPicture.SetActive(false);
         audioManager.bdUnmute();
@@ -127,6 +128,7 @@ public class GameManager : MonoBehaviour
     public void gameOver() 
     {
         bgMove.movingBG = false;
+        debMenuBtn.SetActive(false);
         debugMenu.SetActive(false);
         scorePanel.SetActive(false);
         gameOverPanel.SetActive(true);
@@ -136,7 +138,9 @@ public class GameManager : MonoBehaviour
     public void gameCleared() 
     {
         bgMove.movingBG = false;
+        debMenuBtn.SetActive(false);
         debugMenu.SetActive(false);
+        pauseBtn.SetActive(false);
         gameClearPanel.SetActive(true);
         playerScript.controls = false;
     }
@@ -149,6 +153,9 @@ public class GameManager : MonoBehaviour
     public void levelClear() 
     {
         bgMove.movingBG = false;
+        debMenuBtn.SetActive(false);
+        debugMenu.SetActive(false);
+        pauseBtn.SetActive(false);
         levelClearPanel.SetActive(true);
         playerScript.controls = false;
     }
@@ -185,16 +192,22 @@ public class GameManager : MonoBehaviour
         levelHolder.transform.GetChild(i).gameObject.SetActive(true);
         posReset.ResetPosition();
         playerScript.controls = true;   
+
     }
 
     public void next()
     {
         StartCoroutine(changelevel());
+        debMenuBtn.SetActive(true);
+        debugMenu.SetActive(false);
+        pauseBtn.SetActive(true);
     }
     #endregion
     public void retry()
     {
         StartCoroutine(retrySpawn());
+        debMenuBtn.SetActive(true);
+        debugMenu.SetActive(false);
         gameOverPanel.SetActive(false);
     }
 
@@ -213,25 +226,32 @@ public class GameManager : MonoBehaviour
     public void restartG()
     {
         posReset.ResetPosition();
-        debugMenu.SetActive(true);
         bgMove.movingBG = true;
         scorePanel.SetActive(true);
         gameOverPanel.SetActive(false);
         playerScript.controls = true;
         bgMove.resetBGPos = true;
         playerCol.DeadReset();
+        debMenuBtn.SetActive(true);
+        debugMenu.SetActive(false);
     }
 
     public void DebugMenuOn() 
     {
         debMenuBtn.SetActive(false);
         debugMenu.SetActive(true);
+        bgMove.movingBG = false;
+        pauseBtn.SetActive(false);
+        playerScript.controls = false;
     }
 
     public void DebugMenuOff()
     {
         debMenuBtn.SetActive(true);
         debugMenu.SetActive(false);
+        pauseBtn.SetActive(true);
+        bgMove.movingBG = true;
+        playerScript.controls = true;
     }
 
     public void SaveScore()
