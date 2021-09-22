@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject shopPanel;
     [SerializeField] GameObject shopPausePanel;
     [SerializeField] GameObject levelHolder;
+    [SerializeField] GameObject debMenuBtn;
 
     [SerializeField] Text scoreTxt;
     [SerializeField] Text dolphinscoreTxt;
@@ -219,6 +220,18 @@ public class GameManager : MonoBehaviour
         playerScript.controls = true;
         bgMove.resetBGPos = true;
         playerCol.DeadReset();
+    }
+
+    public void DebugMenuOn() 
+    {
+        debMenuBtn.SetActive(false);
+        debugMenu.SetActive(true);
+    }
+
+    public void DebugMenuOff()
+    {
+        debMenuBtn.SetActive(true);
+        debugMenu.SetActive(false);
     }
 
     public void SaveScore()
